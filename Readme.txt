@@ -1,3 +1,5 @@
+Java-J2ee 3 Months Training(60 Hours)
+
 1. Java-J2ee Overview
 
 2. Java Web Project(XML, HTML, CSS, JavaScript, Jquery, JSP, Servlet, Design Paterns, Web Server)
@@ -17,3 +19,4 @@
 9. Live Project using Java-J2ee
 
 Prerequieste - Basic knowledge of Java, xml , html, css, sql and javascript
+
