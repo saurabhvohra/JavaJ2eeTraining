@@ -2,8 +2,11 @@ package com.agilemaple.common.services;
 
 import java.util.*;
 
+import org.springframework.stereotype.Service;
+
 import com.agilemaple.common.dto.userDetails;
 
+@Service
 public interface Register {
 
 	public boolean register(List<String> values);

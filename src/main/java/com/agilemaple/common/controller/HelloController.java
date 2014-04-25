@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,10 @@ import com.agilemaple.common.services.impl.RegisterImpl;
 @Controller
 @RequestMapping("/welcome")
 public class HelloController {
+	
+	@Autowired
+	Register register;
+	
 	@RequestMapping(/*value="/registerpage",*/  method = RequestMethod.GET)
 	public String getRegisterpage(ModelMap model){
          
@@ -64,8 +69,8 @@ public class HelloController {
          lister.add(postalCode);
          lister.add(phoneNumber);
          lister.add(email);
-         RegisterImpl registral = new RegisterImpl();
-         boolean registerationStatus = registral.register(lister);
+       //  RegisterImpl registral = new RegisterImpl();
+         boolean registerationStatus = register.register(lister);
          if(registerationStatus){
         	 model.addAttribute("userDetails",lister);
          }
@@ -76,8 +81,8 @@ public class HelloController {
 }
 	@RequestMapping(value="/myaccount",  method = RequestMethod.GET)
 	public String myaccount(ModelMap model,@RequestParam("id") Integer id) {
-Register myacc = new RegisterImpl();
-Map<String,String> myAccountDetails = myacc.getUserDetails(id);
+//Register myacc = new RegisterImpl();
+Map<String,String> myAccountDetails = register.getUserDetails(id);
 model.addAttribute("myAccountDetails", myAccountDetails);
 System.out.println("hello");
 return "MyAccount";		
@@ -87,8 +92,8 @@ return "MyAccount";
 	
 	@RequestMapping(value="/myacc",  method = RequestMethod.GET)
 	public String myacc(ModelMap model,@RequestParam("id") Integer id) {
-		Register myacc = new RegisterImpl();
-userDetails userDetail = myacc.getAccountDetails(id);
+		//Register myacc = new RegisterImpl();
+userDetails userDetail = register.getAccountDetails(id);
 System.out.println(userDetail.getAddress());
 model.addAttribute("userDetailObj",userDetail );
 return "MyAccount";		

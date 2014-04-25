@@ -1,10 +1,15 @@
 package com.agilemaple.common.dao.impl;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Repository;
 
 import com.agilemaple.common.dao.RegisterDAO;
 import com.agilemaple.common.dto.userDetails;
 
+@Repository
 public class RegisterDAOimpl implements RegisterDAO{
 
 	@Override
