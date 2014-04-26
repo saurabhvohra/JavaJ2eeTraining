@@ -20,9 +20,6 @@ public class RegisterDAOimplTest {
 	
 	@Autowired
 	private RegisterDAO registerDAO;
-
-	@Before
-    public void setup() {}
 	
 	@Test
 	public void registerTest(){
