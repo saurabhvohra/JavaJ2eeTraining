@@ -20,27 +20,18 @@ import com.agilemaple.common.services.Register;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/test-dispatcher-servlet.xml"})
-public class RegisterImplTest {
-	
-	@Mock
-	private RegisterDAO registerDAO;
+public class RegisterImplIntgTest {
 	
 	@Autowired
 	private Register register;
 
 	@Before
-    public void setup() {
-		 // Process mock annotations
-        MockitoAnnotations.initMocks(this);		
-	}
+    public void setup() {}
 	
 	@Test
 	public void registerTest(){
 		
 		List<String> values = new ArrayList<String>();
-		
-		//Mock register method of DAO and return false if values list is empty
-		Mockito.when(registerDAO.register(values)).thenReturn(false);	
 		
 		boolean registerStatus = register.register(values);
 		
@@ -49,9 +40,6 @@ public class RegisterImplTest {
 		
 		values.add("Arvind");
 		
-		//Mock register method of DAO and return true if values list is not empty
-		Mockito.when(registerDAO.register(values)).thenReturn(true);	
-				
 		registerStatus = register.register(values);
 		
 		//verify that returned value is boolean true
