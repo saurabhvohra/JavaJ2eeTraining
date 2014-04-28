@@ -1,13 +1,16 @@
 package com.agilemaple.common.services.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -25,6 +28,7 @@ public class RegisterImplTest {
 	@Mock
 	private RegisterDAO registerDAO;
 	
+	@InjectMocks
 	@Autowired
 	private Register register;
 
@@ -56,6 +60,24 @@ public class RegisterImplTest {
 		
 		//verify that returned value is boolean true
 		Assert.assertTrue(registerStatus);		
+		
+	}
+	
+	@Test
+	public void getUserDetailsTest(){
+		int id = 10;
+		
+		Map<String,String> userStatus = new HashMap<String, String>();
+		Mockito.when(registerDAO.getUserDetails(id)).thenReturn(userStatus);
+		Map<String,String> userStat = register.getUserDetails(id);
+		Assert.assertEquals(userStat.size(), 0);
+		
+		id=20;
+		userStatus.put("test", "Virat");
+		Mockito.when(registerDAO.getUserDetails(id)).thenReturn(userStatus);
+		Map<String,String> user = register.getUserDetails(id);
+		Assert.assertEquals(user.get("test"),"Virat");
+		
 		
 	}
 }
