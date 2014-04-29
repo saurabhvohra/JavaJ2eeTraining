@@ -1,7 +1,9 @@
 package com.agilemaple.common.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import junit.framework.Assert;
 
@@ -37,6 +39,19 @@ public class RegisterDAOimplTest {
 		
 		//verify that returned value is boolean true
 		Assert.assertTrue(registerStatus);		
+		
+	}
+	
+	@Test
+	public void  getUserDetailsTest(){
+		int id = 20;
+		Map<String,String> userStatus = registerDAO.getUserDetails(id);
+		Assert.assertNotNull(userStatus);
+		Assert.assertEquals(userStatus.get("C1"),"Saurabh");
+		 
+		id = 10;
+		userStatus = registerDAO.getUserDetails(id);
+		Assert.assertEquals(userStatus.size(), 0);
 		
 	}
 }
