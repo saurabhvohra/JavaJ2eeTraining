@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.agilemaple.common.dto.userDetails;
+import com.agilemaple.common.entity.Contact;
+import com.agilemaple.common.services.ContactService;
 import com.agilemaple.common.services.Register;
 
 @Controller
@@ -26,12 +28,14 @@ public class HelloController {
 
 	@Autowired
 	Register register;
-
-	@RequestMapping(/* value="/registerpage", */method = RequestMethod.GET)
+	@Autowired
+	ContactService contactService;
+	
+	/*@RequestMapping(method = RequestMethod.GET)
 	public String getRegisterpage(ModelMap model) {
 		logger.debug("Inside getRegisterpage");
 		return "home";
-	}
+	}*/
 
 	/*
 	 * @RequestMapping(method = RequestMethod.GET) public String
@@ -42,6 +46,31 @@ public class HelloController {
 	 * 
 	 * }
 	 */
+	@RequestMapping(value = "/contact", method = RequestMethod.POST)
+	public String getContacts(ModelMap model,@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName,
+			@RequestParam("telephone") String telephone,@RequestParam("email") String email){
+		Contact contact = new Contact();
+		contact.setEmail(email);
+		contact.setFirstname(firstName);
+		contact.setLastname(lastName);
+		contact.setTelephone(telephone);
+		contactService.addContact(contact);
+		return"ContactForm";
+		
+		
+	}
+	@RequestMapping( method = RequestMethod.GET)
+	public String getForm(ModelMap model){
+		return"ContactForm";
+		
+		
+	}
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String welcome(ModelMap model,
 			@RequestParam("username") String username,
