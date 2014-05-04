@@ -16,6 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.agilemaple.common.dao.RegisterDAO;
 
+
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/test-dispatcher-servlet.xml"})
 public class RegisterDAOimplTest {

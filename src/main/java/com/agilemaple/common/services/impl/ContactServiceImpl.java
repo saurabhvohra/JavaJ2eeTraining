@@ -32,4 +32,9 @@ public class ContactServiceImpl implements ContactService {
 	public void removeContact(Integer id) {
 		contactDAO.removeContact(id);
 	}
+
+	@Transactional
+	public Contact findContact(String firstname, String lastname) {
+		return contactDAO.findContact(firstname, lastname);
+	}
 }

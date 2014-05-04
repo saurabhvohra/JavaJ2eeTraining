@@ -9,6 +9,9 @@
 <a href="${mainUrl}/myaccount?id=20">My Account</a>
 </p>
 <a href="${mainUrl}/myacc?id=20">My Account</a>
+<a href="${mainUrl}/myacc?id=20">My Account</a>
+<a href="${mainUrl}/contactform">Create new Contact</a>
+<a href="${mainUrl}/listContacts" target="_blank">Contacts</a>
 
 
 

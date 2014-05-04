@@ -18,10 +18,16 @@ import com.agilemaple.common.dto.userDetails;
 import com.agilemaple.common.entity.Contact;
 import com.agilemaple.common.services.ContactService;
 import com.agilemaple.common.services.Register;
+import com.agilemaple.common.Constants;
+
+
+
 
 @Controller
 @RequestMapping("/welcome")
 public class HelloController {
+	
+	
 	// get log4j handler
 	private static final Logger logger = Logger
 			.getLogger(HelloController.class);
@@ -31,11 +37,12 @@ public class HelloController {
 	@Autowired
 	ContactService contactService;
 	
-	/*@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String getRegisterpage(ModelMap model) {
-		logger.debug("Inside getRegisterpage");
+		
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getRegisterpage");
 		return "home";
-	}*/
+	}
 
 	/*
 	 * @RequestMapping(method = RequestMethod.GET) public String
@@ -49,6 +56,7 @@ public class HelloController {
 	@RequestMapping(value = "/contact", method = RequestMethod.POST)
 	public String getContacts(ModelMap model,@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName,
 			@RequestParam("telephone") String telephone,@RequestParam("email") String email){
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getContacts");
 		Contact contact = new Contact();
 		contact.setEmail(email);
 		contact.setFirstname(firstName);
@@ -56,16 +64,20 @@ public class HelloController {
 		contact.setTelephone(telephone);
 		contactService.addContact(contact);
 		return"ContactForm";
-		
-		
-	}
-	@RequestMapping( method = RequestMethod.GET)
+}
+	@RequestMapping(value = "/getcontactform", method = RequestMethod.GET)
 	public String getForm(ModelMap model){
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getForm");
 		return"ContactForm";
-		
-		
-	}
+}
 	
+	@RequestMapping(value = "/listContacts", method = RequestMethod.GET)
+	public String getContacts(ModelMap model){
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getContacts");
+		List<Contact> contactList = contactService.listContact();
+		model.addAttribute("contactList", contactList);
+		return"ListContacts";
+}
 	
 	
 	
@@ -75,7 +87,7 @@ public class HelloController {
 	public String welcome(ModelMap model,
 			@RequestParam("username") String username,
 			@RequestParam("password") int password) {
-		logger.debug("Inside welcome");
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"welcome");
 		if ((username.equals("gunny")) && (password == 123)) {
 			model.addAttribute("message", "Welcome Sir");
 			return "home";
@@ -97,7 +109,7 @@ public class HelloController {
 			@RequestParam("postalCode") String postalCode,
 			@RequestParam("phoneNumber") String phoneNumber,
 			@RequestParam("email") String email) {
-		logger.debug("Inside register");
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"register");
 		List<String> lister = new ArrayList<String>();
 		lister.add(firstName);
 		// lister.add(sex);
@@ -119,7 +131,7 @@ public class HelloController {
 
 	@RequestMapping(value = "/myaccount", method = RequestMethod.GET)
 	public String myaccount(ModelMap model, @RequestParam("id") Integer id) {
-		logger.debug("myaccount");
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"myaccount");
 		Map<String, String> myAccountDetails = register.getUserDetails(id);
 		model.addAttribute("myAccountDetails", myAccountDetails);
 		System.out.println("hello");
@@ -129,7 +141,7 @@ public class HelloController {
 
 	@RequestMapping(value = "/myacc", method = RequestMethod.GET)
 	public String myacc(ModelMap model, @RequestParam("id") Integer id) {
-		logger.debug("myacc");
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"myacc");
 		userDetails userDetail = register.getAccountDetails(id);
 		System.out.println(userDetail.getAddress());
 		model.addAttribute("userDetailObj", userDetail);
@@ -146,7 +158,14 @@ public class HelloController {
 	 * 
 	 * }
 	 */
-
+	@RequestMapping(value = "/contact", method = RequestMethod.GET)
+	public String getContact(ModelMap model, @RequestParam("firstname") String firstName,
+			@RequestParam("lastname") String lastName){
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getContact");
+		Contact contact = contactService.findContact(firstName, lastName);
+		model.addAttribute("contact",contact);
+		return"DisplayContact";
+}
 } 
 	
 	
