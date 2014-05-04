@@ -1,15 +1,18 @@
 package com.agilemaple.common.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 @Entity
 @Table(name="CONTACTS")
-public class Contact {
+public class Contact implements Serializable{
 	
 	@Id
 	@Column(name="ID")
@@ -27,8 +30,7 @@ public class Contact {
 	
 	@Column(name="TELEPHONE")
 	private String telephone;
-	
-	
+
 	public String getEmail() {
 		return email;
 	}
