@@ -3,8 +3,8 @@ package com.agilemaple.common.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,6 +40,27 @@ public class ContactDAOImpl implements ContactDAO {
 	public Contact findContact(String firstname, String lastname) {
 		Contact contact = null;
 		
+		// gettting contact using HQL
+/*		String queryStringHQL = "FROM Contact c WHERE c.firstname = '"+firstname+"' AND c.lastname='"+lastname+"'"; 
+		
+		Query query = sessionFactory.getCurrentSession().createQuery(queryStringHQL);
+		List<Contact> results = query.list();
+		if(results.size()>0){
+			contact = results.get(0);	
+		}*/
+		
+		
+		//getting contact using criteria query
+		Criteria cr = sessionFactory.getCurrentSession().createCriteria(Contact.class);
+		cr.add(Restrictions.eq("firstname", firstname));
+		cr.add(Restrictions.eq("lastname", lastname));
+		List<Contact> results = cr.list();
+		if(results.size()>0){
+			contact = results.get(0);
+		}
+		
+/*		Contact contact = null;
+		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Contact.class);
 		
 		if(firstname!=null){
@@ -52,7 +73,7 @@ public class ContactDAOImpl implements ContactDAO {
 		
 		if(results.size()>0){
 			contact = results.get(0);	
-		}
+		}*/
 		return contact;		
 	}
 }
