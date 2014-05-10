@@ -6,12 +6,12 @@
  
 <hibernate-configuration>
     <session-factory>
-        <mapping class="com.agilemaple.common.entity.Contact" />
-        <mapping class="com.agilemaple.common.entity.UserInformation" />
+        <mapping class="com.agilemaple.common.entity.Contact" />        
         <mapping class="com.agilemaple.common.entity.UserDetails" />
+        <mapping class="com.agilemaple.common.entity.UserInformation"/>
         <mapping class="com.agilemaple.common.entity.Authors" />
         <mapping class="com.agilemaple.common.entity.Biography" />
         
-</session-factory>
+    </session-factory>
 	    
 </hibernate-configuration>
