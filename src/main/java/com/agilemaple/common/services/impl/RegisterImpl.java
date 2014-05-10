@@ -1,5 +1,6 @@
 package com.agilemaple.common.services.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.agilemaple.common.dao.RegisterDAO;
-import com.agilemaple.common.dao.impl.RegisterDAOimpl;
 import com.agilemaple.common.dto.userDetails;
 import com.agilemaple.common.services.Register;
 
@@ -35,5 +35,16 @@ public class RegisterImpl implements Register {
 	public userDetails getAccountDetails(int id) {
 		userDetails userDetail = registerDAO.getAccountDetails(id);
 		return userDetail;
+	}
+
+	@Override
+	public Map<String, String> validateLogin(Map<String, String> inputs) {
+		Map<String, String> errors = new HashMap<String, String>();
+		if(inputs.get("username").length()<30)
+		errors.put("usernameerror", inputs.get("username")+" is less than 30");
+		
+		
+		
+		return errors;
 	}
 }

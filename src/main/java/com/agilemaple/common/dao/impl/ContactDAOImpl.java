@@ -3,12 +3,11 @@ package com.agilemaple.common.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.agilemaple.common.dao.ContactDAO;
 import com.agilemaple.common.entity.Contact;
@@ -38,7 +37,8 @@ public class ContactDAOImpl implements ContactDAO {
 
 	@Override
 	public Contact findContact(String firstname, String lastname) {
-		Contact contact = null;
+		
+		/*		Contact contact = null;
 		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Contact.class);
 		
@@ -53,6 +53,28 @@ public class ContactDAOImpl implements ContactDAO {
 		if(results.size()>0){
 			contact = results.get(0);	
 		}
-		return contact;		
+//Getting Contact using HQL		
+/*		String queryStringHQL = "FROM Contact c WHERE c.firstname ='"+firstname+"' AND c.lastname='"+lastname+"'";
+ 
+
+Contact contact = null;
+    Query query =sessionFactory.getCurrentSession().createQuery(queryStringHQL);
+    List<Contact> results= query.list(); 
+    if(results.size()>0){
+		contact = results.get(0);	
+	}*/
+
+
+//Getting Contact using Creteria query
+Contact contact = null;
+Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Contact.class);
+criteria.add(Restrictions.eq("firstname", firstname));
+criteria.add(Restrictions.eq("lastname", lastname));
+List<Contact> results = criteria.list();    
+if(results.size()>0){
+	 contact  = results.get(0);	
+}
+return contact;		
+    
 	}
 }

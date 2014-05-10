@@ -9,6 +9,7 @@
 <c:url var="mainUrl" value="/tutor/welcome" scope="request"></c:url>
 <link href="${cssurl}/style.css" rel="stylesheet" type="text/css"/>
 <Script src="${jssurl}/style.js" type="text/javascript"></Script>
+<Script src="${jssurl}/jquery-1.11.1.js" type="text/javascript"></Script>
 </head>
 <body>
 Header

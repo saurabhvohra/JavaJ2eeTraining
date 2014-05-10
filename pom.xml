@@ -110,7 +110,8 @@
 	      	<artifactId>commons-pool</artifactId>
 	      	<version>20030825.183949</version>
 	    </dependency>
-	</dependencies>
+
+	    </dependencies>
 	
 	<build>
 		<finalName>AgilemapleTraining</finalName>

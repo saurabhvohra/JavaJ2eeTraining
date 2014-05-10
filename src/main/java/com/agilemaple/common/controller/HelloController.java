@@ -14,10 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.agilemaple.common.controller.form.PortfolioBean;
+import com.agilemaple.common.dto.UserInformationVO;
 import com.agilemaple.common.dto.userDetails;
 import com.agilemaple.common.entity.Contact;
+import com.agilemaple.common.entity.UserDetails;
+import com.agilemaple.common.entity.UserInformation;
 import com.agilemaple.common.services.ContactService;
 import com.agilemaple.common.services.Register;
+import com.agilemaple.common.services.UserDetailsService;
+import com.agilemaple.common.services.UserInformationService;
 import com.agilemaple.common.Constants;
 
 
@@ -36,6 +42,10 @@ public class HelloController {
 	Register register;
 	@Autowired
 	ContactService contactService;
+	@Autowired
+	UserInformationService userService;
+	@Autowired
+	UserDetailsService userDetails;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String getRegisterpage(ModelMap model) {
@@ -43,7 +53,62 @@ public class HelloController {
 		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getRegisterpage");
 		return "home";
 	}
-
+	
+	@RequestMapping(value = "/userlogin", method = RequestMethod.GET)
+	public String userdata(ModelMap model){
+		model.addAttribute("userDetails", userDetails);
+		return "Signup";
+	}
+	
+	@RequestMapping(value = "/userInformation", method = RequestMethod.POST)
+	public String userInf(ModelMap model,@RequestParam("username") String username,@RequestParam("password") String password){
+		UserDetails user = userDetails.readUsers(username, password);
+		List<UserDetails> listOfUsers = userDetails.listUsers();
+		UserDetails firstUser = listOfUsers.get(0);
+		String firstUserName=firstUser.getFirstname();
+		String  firstUserPassword= firstUser.getPassword();
+		if((firstUserName.equals(username))&&( firstUserPassword.equals(password))){
+			model.addAttribute("user", user);
+			return "HomePage";
+		}else{
+	        model.addAttribute("message", "Problems signing in to your account");
+			return "err";
+	}
+	}
+	@RequestMapping(value = "/userSignup", method = RequestMethod.POST)
+	public String userSignup(ModelMap model, @RequestParam("firstname") String firstname ,@RequestParam("lastname") String lastname, 
+			@RequestParam("email") String email,@RequestParam("username") String username,
+			@RequestParam("password") String password,@RequestParam("country") String country,
+			@RequestParam("postalcode") String postalcode,
+			@RequestParam("birthday") String birthday,
+			@RequestParam("gender") String gender){
+		UserDetails user = new UserDetails();
+		user.setFirstname(firstname);
+		user.setLastname(lastname);
+		user.setEmail(email);
+		user.setUsername(username);
+		user.setPassword(password);
+		user.setCountry(country);
+		user.setPostalcode(postalcode);
+		user.setBirthday(birthday);
+		user.setGender(gender);
+		userDetails.addUser(user);
+	  return "Register";
+	}
+		
+	@RequestMapping(value = "/userdata", method = RequestMethod.GET)
+	public String users(ModelMap model, @RequestParam("page") Integer page ){
+	//int pageInt=Integer.parseInt("page"); 
+	page=page+1;
+    int nextPageid=page+1;
+    
+    UserInformationVO  userInform= userService.readUsers(page);
+	model.addAttribute("nextPageid",nextPageid);
+	model.addAttribute("userInform",userInform);
+	return "userInformation";
+	}
+	
+	
 	/*
 	 * @RequestMapping(method = RequestMethod.GET) public String
 	 * printWelcome(ModelMap model) {
@@ -53,6 +118,12 @@ public class HelloController {
 	 * 
 	 * }
 	 */
+	
+	@RequestMapping(value = "/contactform", method = RequestMethod.GET)
+	public String contactform(ModelMap model){
+	return "ContactForm";
+	}
+	
 	@RequestMapping(value = "/contact", method = RequestMethod.POST)
 	public String getContacts(ModelMap model,@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName,
 			@RequestParam("telephone") String telephone,@RequestParam("email") String email){
@@ -166,6 +237,26 @@ public class HelloController {
 		model.addAttribute("contact",contact);
 		return"DisplayContact";
 }
+	
+	@RequestMapping("/populateForm")
+	
+	    public String populateForm(ModelMap model){	
+	        String view = "portfolioview";
+	
+	        PortfolioBean portfolio = new PortfolioBean();
+	        
+	        portfolio.setName("Full name");
+	
+	        portfolio.setMobNum("0123456789");
+	
+	        model.addAttribute("portfolio", portfolio);
+
+	        System.out.println("portfolio set. returning to " + view);
+	
+	        return "Portfolio";
+	
+	    }
+
 } 
 	
 	
