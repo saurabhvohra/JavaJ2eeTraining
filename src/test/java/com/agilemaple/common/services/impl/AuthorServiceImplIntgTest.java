@@ -23,12 +23,12 @@ public class AuthorServiceImplIntgTest {
 	@Test
 	public void createAuthorBiographyOneToOneTest(){
 		Authors author = new Authors();
-		author.setName("Jack London");
+		author.setName("Chamkila");
 		Biography biography = new Biography();
-		biography.setInformation("Jack London was an American author..");
+		biography.setInformation("Kan kar gal sun mitra");
 		Authors persistedAuthor = authorService.createAuthorBiographyOneToOne(author, biography);
-		Assert.assertEquals("Jack London", persistedAuthor.getName());
-		Assert.assertEquals("Jack London was an American author..", persistedAuthor.getBiography().getInformation());
+		Assert.assertEquals("Chamkila", persistedAuthor.getName());
+		Assert.assertEquals("Kan kar gal sun mitra", persistedAuthor.getBiography().getInformation());
 	}
 	
 

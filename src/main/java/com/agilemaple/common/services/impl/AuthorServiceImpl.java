@@ -23,9 +23,10 @@ public class AuthorServiceImpl implements AuthorService {
 
 	@Transactional
 	public Authors createAuthorBiographyOneToOne(Authors author, Biography biography) {
-		authorDAO.persistAuthor(author);
-		biography.setAuthorId(author.getId());
+	//	authorDAO.persistAuthor(author);
 		author.setBiography(biography);
+		biography.setAuthor(author);
+		
 		authorDAO.saveAuthor(author);
 		return author;
 	}

@@ -20,8 +20,8 @@ public class Authors {
 	
 	private String name;
 	
-	@OneToOne(cascade=CascadeType.ALL)
-	@PrimaryKeyJoinColumn
+	@OneToOne(mappedBy="author", cascade=CascadeType.ALL)
+	
 	private Biography biography;
 
 	public Integer getId() {
