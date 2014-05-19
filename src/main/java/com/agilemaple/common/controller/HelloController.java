@@ -30,7 +30,7 @@ import com.agilemaple.common.Constants;
 
 
 @Controller
-@RequestMapping("/welcome")
+@RequestMapping("/account")
 public class HelloController {
 	
 	

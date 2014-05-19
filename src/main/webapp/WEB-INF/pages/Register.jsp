@@ -8,7 +8,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 <H1>Register Today and Get Free Oil Change</H1>	
-<form name="input" action="welcome/register" method="post">
+<form name="input" action="${sMainUrl}/register" method="post">
 First Name      :<input type="text" name="firstName"><br>
 Last Name       :<input type="text" name="lastName"><br>
 <!-- Gender :<input type="radio" name="sex" value="male">Male 
