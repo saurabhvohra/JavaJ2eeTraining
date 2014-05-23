@@ -3,37 +3,41 @@ package com.agilemaple.common.controller;
 //import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.agilemaple.common.Constants;
 import com.agilemaple.common.controller.form.PortfolioBean;
 import com.agilemaple.common.dto.UserInformationVO;
 import com.agilemaple.common.dto.userDetails;
+import com.agilemaple.common.entity.Authors;
 import com.agilemaple.common.entity.Contact;
 import com.agilemaple.common.entity.UserDetails;
-import com.agilemaple.common.entity.UserInformation;
 import com.agilemaple.common.services.ContactService;
 import com.agilemaple.common.services.Register;
 import com.agilemaple.common.services.UserDetailsService;
 import com.agilemaple.common.services.UserInformationService;
-import com.agilemaple.common.Constants;
 
 
 
 
 @Controller
 @RequestMapping("/account")
-public class HelloController {
-	
-	
+public class HelloController {	
 	// get log4j handler
 	private static final Logger logger = Logger
 			.getLogger(HelloController.class);
@@ -46,6 +50,45 @@ public class HelloController {
 	UserInformationService userService;
 	@Autowired
 	UserDetailsService userDetails;
+	
+	
+	
+	@RequestMapping(value = "/movedPermanently", method = RequestMethod.GET)
+	public @ResponseBody HttpStatus getMovedPermanently(ModelMap model) {
+		String result = "OK";
+		//.MOVED_PERMANENTLY
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getAuthors");
+		return HttpStatus.MOVED_PERMANENTLY;
+	}
+	
+	@RequestMapping(value = "/authors", method = RequestMethod.GET)
+	public @ResponseBody String getAuthors(ModelMap model) {
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getAuthors");
+		
+		
+		JSONArray jarray = new JSONArray();
+		//contactService.listContact()
+	      try {
+	    	
+	    	for(Contact contact: contactService.listContact()){
+	    	//	JSONObject objMain = new JSONObject();
+	    		JSONObject obj = new JSONObject();
+	    		obj.put("FirstName",contact.getFirstname());
+	    		obj.put("LastName",contact.getLastname());
+	    		obj.put("Email",contact.getEmail());
+	    		//objMain.put(contact.getFirstname(),contact);	
+	    		jarray.put(obj);
+	    	}
+	    	
+			/*obj.put("name", "foo");
+			obj.put("num", new Integer(100));
+		    obj.put("balance", new Double(1000.21));
+		    obj.put("is_vip", new Boolean(true));*/
+		} catch (JSONException e) {
+			logger.error(Constants.METHOD_INSIDE_MESSAGE +"getAuthors",e);
+		}		
+		return jarray.toString();
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String getRegisterpage(ModelMap model) {
