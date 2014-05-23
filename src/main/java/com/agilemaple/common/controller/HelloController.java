@@ -2,6 +2,8 @@ package com.agilemaple.common.controller;
 
 //import javax.servlet.http.HttpServletRequest;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import com.agilemaple.common.Constants;
 import com.agilemaple.common.controller.form.PortfolioBean;
@@ -31,6 +34,7 @@ import com.agilemaple.common.services.ContactService;
 import com.agilemaple.common.services.Register;
 import com.agilemaple.common.services.UserDetailsService;
 import com.agilemaple.common.services.UserInformationService;
+import com.google.gson.Gson;
 
 
 
@@ -50,8 +54,10 @@ public class HelloController {
 	UserInformationService userService;
 	@Autowired
 	UserDetailsService userDetails;
+	@Autowired
+	RestTemplate restTemplate;
 	
-	
+	//web Services
 	
 	@RequestMapping(value = "/movedPermanently", method = RequestMethod.GET)
 	public @ResponseBody HttpStatus getMovedPermanently(ModelMap model) {
@@ -89,6 +95,37 @@ public class HelloController {
 		}		
 		return jarray.toString();
 	}
+	
+	@RequestMapping(value = "/contactsusingGson", method = RequestMethod.GET)
+	public @ResponseBody String getContactsusingGson(ModelMap model) {
+		Gson gson = new Gson();
+		String json = null;
+		try{
+		
+			json = gson.toJson(contactService.listContact());
+		
+		}catch(Exception e){
+			logger.error(Constants.METHOD_INSIDE_MESSAGE +"getAuthors",e);
+			
+		}
+		return json;
+	}
+	
+	    //Desirealization//
+	@RequestMapping(value = "/deserialization", method = RequestMethod.GET)
+	public @ResponseBody String consumingWebServices(ModelMap model) {
+	
+	String contacts =restTemplate.getForObject("http://localhost:8080/AgilemapleTraining/tutor/open/account/contactsusingGson", String.class);
+	logger.debug(contacts);
+	return contacts;
+	
+	}
+	
+	
+	
+	
+	
+	///***********************************************///
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String getRegisterpage(ModelMap model) {

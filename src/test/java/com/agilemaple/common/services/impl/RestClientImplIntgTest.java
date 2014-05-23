@@ -11,28 +11,19 @@ import org.springframework.web.client.RestTemplate;
 
 import com.agilemaple.common.entity.Contact;
 import com.agilemaple.common.services.ContactService;
+import com.agilemaple.common.services.RestClient;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"/test-dispatcher-servlet.xml"})
-public class ContactServiceImplIntgTest {
+public class RestClientImplIntgTest {
 	
 	@Autowired
-	private ContactService contactService;
+	private RestClient restClient;
 
-	
-/*	@Test
-	public void registerTest(){
-		Contact contact = new Contact();
-		contact.setEmail("as@g.com");
-		contact.setFirstname("S");
-		contact.setLastname("V");
-		contact.setTelephone("5149636381");
-		contactService.addContact(contact);
-	}*/
 	@Test
-	public void findContactTest(){
-		Contact contact = contactService.findContact("shivam", "marwaha");		
-		Assert.assertEquals("55", contact.getTelephone());
+	public void consumingWebServicesTest(){
+		String contacts=restClient.consumingWebServices("http://localhost:8080/AgilemapleTraining/tutor/open/account/contactsusingGson");
+		Assert.assertNotNull(contacts);
 	}
 	
 	

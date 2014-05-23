@@ -138,6 +138,12 @@
 			<version>20090211</version>
 		</dependency>
 		
+<dependency>
+	<groupId>com.google.code.gson</groupId>
+	<artifactId>gson</artifactId>
+	<version>1.7.1</version>
+  </dependency>
+		
 	    </dependencies>
 	
 	<build>
@@ -156,7 +162,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <excludes>
-                        <exclude>**/*IntgTest.java</exclude>
+                        <exclude>**/*Test.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
