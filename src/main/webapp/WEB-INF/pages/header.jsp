@@ -3,7 +3,7 @@
 <html>
 <head>
 <title> Locations </title>
-<c:url var="imageurl" value="/resources/image" scope="request"/>
+<c:url var="imageurl" value="/resources" scope="request"/>
 <c:url var="cssurl" value="/resources/css" scope="request"/>
 <c:url var="jssurl" value="/resources/js" scope="request"></c:url>
 <c:url var="mainUrl" value="/tutor/open/account" scope="request"></c:url>

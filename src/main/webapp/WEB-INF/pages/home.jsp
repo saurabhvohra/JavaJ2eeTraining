@@ -41,6 +41,7 @@ display: inline-block;/* to make it verticcle use "block"*/
 <li><a href="${mainUrl}/listContacts" target="_blank">Contacts</a></li>
 <li><a href="${mainUrl}/userdata?page=0" target="_blank">Users From DataBase</a></li>
 <li><a href="${mainUrl}/userlogin">Login(Database)</a></li>
+<li><a href="${mainUrl}/photo2">Capcha Example</a></li>
 </ul>
 </nav>
 <%-- <table>

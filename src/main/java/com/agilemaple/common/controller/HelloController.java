@@ -2,19 +2,38 @@ package com.agilemaple.common.controller;
 
 //import javax.servlet.http.HttpServletRequest;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.util.ArrayList;
-
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.imageio.stream.ImageInputStream;
+import javax.imageio.stream.ImageOutputStream;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +46,9 @@ import com.agilemaple.common.Constants;
 import com.agilemaple.common.controller.form.PortfolioBean;
 import com.agilemaple.common.dto.UserInformationVO;
 import com.agilemaple.common.dto.userDetails;
-import com.agilemaple.common.entity.Authors;
 import com.agilemaple.common.entity.Contact;
 import com.agilemaple.common.entity.UserDetails;
+import com.agilemaple.common.services.CapchaService;
 import com.agilemaple.common.services.ContactService;
 import com.agilemaple.common.services.Register;
 import com.agilemaple.common.services.UserDetailsService;
@@ -45,6 +64,14 @@ public class HelloController {
 	// get log4j handler
 	private static final Logger logger = Logger
 			.getLogger(HelloController.class);
+	final DefaultResourceLoader loader = new DefaultResourceLoader();
+
+	@RequestMapping(method = RequestMethod.GET)
+	public String getRegisterpage(ModelMap model) {
+		
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getRegisterpage");
+		return "home";
+	}
 
 	@Autowired
 	Register register;
@@ -55,7 +82,10 @@ public class HelloController {
 	@Autowired
 	UserDetailsService userDetails;
 	@Autowired
+	CapchaService capchaService;
+	@Autowired
 	RestTemplate restTemplate;
+	
 	
 	//web Services
 	
@@ -127,12 +157,87 @@ public class HelloController {
 	
 	///***********************************************///
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public String getRegisterpage(ModelMap model) {
+	/***********************************************************************************
+	    CAPCHA
+	************************************************************************************/
+	
+	/*@RequestMapping(value = "/capcha", method = RequestMethod.GET)
+	public @ResponseBody Byte[] CapchaGson(ModelMap model) {
+		Gson gson = new Gson();
+		String json = null;
+		try{
+			
+			json = gson.toJson(capchaService.CapchaString("hgsyg"));
 		
-		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getRegisterpage");
-		return "home";
+		}catch(Exception e){
+			logger.error(Constants.METHOD_INSIDE_MESSAGE +"getAuthors",e);
+			
+		}
+		return json;
+	}*/
+
+	
+	@RequestMapping(value = "/photo2", method = RequestMethod.GET)
+	public String returningPage(ModelMap model){
+		return "Capchalogin";
 	}
+	
+    @ResponseBody
+	@RequestMapping(value="/capcha", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public byte[] testphoto(ModelMap model) throws IOException {
+    	//InputStream in = servletContext.getResourceAsStream("/resources/Modi.jpg");
+		//Resource resource = loader.getResource("new.png");
+		//ImageInputStream watermarkImage = ImageIO.createImageInputStream(resource.getFile());
+	    // InputStream is = new BufferedInputStream(new FileInputStream(resource.getFile()));
+		//InputStream is = new BufferedInputStream(new FileInputStream(image));
+	    //return IOUtils.toByteArray(is);
+        /*FileOutputStream fos = new FileOutputStream("C:/Users/Saurabh/Documents/Agile maple code/JavaJ2eeTraining/src/main/webapp/resources/image.jpg");
+          try {
+                fos.write(image);
+                 }
+                finally {
+                       fos.close();
+                  }*/
+
+         //Resource resource = loader.getResource("image.jpg");
+         //ImageInputStream watermarkImage = ImageIO.createImageInputStream(resource.getFile());
+		byte[] image =capchaService.CapchaString();
+	    return image;    
+	}
+    
+	@RequestMapping(value = "/returnPage") 
+	public  String returningPag(ModelMap model,@RequestParam("capcha") String capcha){
+		byte[] originalCapchaInByteArray=capchaService.ReturnedCapchaString();
+		byte[] returnedCapchaInByteArray = capcha.getBytes();
+		if(Arrays.equals(returnedCapchaInByteArray, originalCapchaInByteArray)){
+			return "CapchaSubmit";
+		}
+		return "403";
+		
+	}
+	
+	
+	/*     try {
+             BufferedImage bi=new BufferedImage(300, 100, BufferedImage.TYPE_INT_RGB);
+             Graphics g = bi.getGraphics();
+             g.drawString(capcha, 50, 50);
+             ByteArrayOutputStream baos = new ByteArrayOutputStream();
+             ImageIO.write( bi, "png", baos );
+             baos.flush();
+             //ImageOutputStream out = new FileImageOutputStream(new File("C:/Users/Saurabh/Documents/Agile maple code/JavaJ2eeTraining/src/main/resources/new.png")); 
+             //ImageIO.write(bi, "png", out);
+             byte[] savedArray =  baos.toByteArray();
+             return savedArray;
+         } catch (IOException e) {
+             throw new RuntimeException(e);
+         }*/
+
+	
+	
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/userlogin", method = RequestMethod.GET)
 	public String userdata(ModelMap model){
