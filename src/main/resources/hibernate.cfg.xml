@@ -11,7 +11,11 @@
         <mapping class="com.agilemaple.common.entity.UserInformation"/>
         <mapping class="com.agilemaple.common.entity.Authors" />
         <mapping class="com.agilemaple.common.entity.Biography" />
-        
+        <mapping class="com.agilemaple.common.entity.Provinces" />
+        <mapping class="com.agilemaple.common.entity.PLanguage" />
+        <mapping class="com.agilemaple.common.entity.Cities" />
+        <mapping class="com.agilemaple.common.entity.CLanguage" />
+       
     </session-factory>
 	    
 </hibernate-configuration>
