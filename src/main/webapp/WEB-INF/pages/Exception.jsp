@@ -13,7 +13,7 @@ function doAjaxPost() {
 	if(pattern.test(email)){         
 		$.ajax({
 			type: "POST",
-			url: "${mainUrl}/ajaxFormResponseType2Method",
+			url: "${mainUrl}/buySellException",
 			data: "firstName=" + firstName + "&lastName=" + lastname + "&telephone=" + telephone + "&email=" + email,
 			success: function(response){
 			//alert(response);
@@ -26,7 +26,7 @@ function doAjaxPost() {
 			$('#email').val('');
 			},
 			error: function(e){
-		//	alert('Error: ' + e);
+			alert('Error: ' + e);
 			}
 			});
 	}else{   

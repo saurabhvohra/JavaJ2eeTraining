@@ -69,5 +69,15 @@
 	
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">       
     </bean>
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+   <property name="exceptionMappings">
+      <props>
+         <prop key="com.agilemaple.common.controller.BuyAndSellException">
+            AjaxExceptionPage
+         </prop>
+      </props>
+   </property>
+   <property name="defaultErrorView" value="error"/>
+</bean>
 
 </beans>

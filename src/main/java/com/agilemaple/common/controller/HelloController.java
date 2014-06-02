@@ -36,6 +36,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -494,9 +495,15 @@ public class HelloController {
 	}
 
 @RequestMapping(value = "/ajaxFormResponseType2Method", method = RequestMethod.POST)
+@ExceptionHandler({BuyAndSellException.class})
 public String ajaxFormResponseType2Method(ModelMap model,@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName,
 		@RequestParam("telephone") String telephone,@RequestParam("email") String email){
 	logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getContacts");
+	
+	if(firstName.length()<3){
+        throw new BuyAndSellException("Given name is less than 3");
+       
+     }else{
 	Contact contact = new Contact();
 	contact.setEmail(email);
 	contact.setFirstname(firstName);
@@ -507,7 +514,38 @@ public String ajaxFormResponseType2Method(ModelMap model,@RequestParam("firstNam
 	model.addAttribute("contactList", contactList);
 	return "IncludeContactsAjaxTwo";
 	
+     }	
 }
+/********************************************************************************
+ *  EXCEPTION hANDLING
+ *********************************************************************************/
+@RequestMapping(value = "/buySell", method = RequestMethod.GET)
+public String buySell(ModelMap model){
+return "IncludeContactsAjax";
+}
+
+
+//@ExceptionHandler({BuyAndSellException.class})
+@RequestMapping(value = "/buySellException", method = RequestMethod.GET)
+public @ResponseBody String buySellException(ModelMap model,@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName,
+		@RequestParam("telephone") String telephone,@RequestParam("email") String email){
+	if(firstName.length()<3){
+        throw new BuyAndSellException("Given name is less than 3");
+       
+     }else{
+    Contact contact = new Contact();
+  	contact.setEmail(email);
+  	contact.setFirstname(firstName);
+  	contact.setLastname(lastName);
+  	contact.setTelephone(telephone);
+  	contactService.addContact(contact);
+  	List<Contact> contactList = contactService.listContact();
+  			model.addAttribute("contactList", contactList);
+     }
+return "IncludeContactsAjaxTwo";
+}
+
+
 }
 
 	
