@@ -327,6 +327,48 @@ public class HelloController {
 		return"ContactForm";
 }
 	
+	
+	/********************************************************************************
+	 *                                       AJAX
+	 ************************************************************************************/
+	@RequestMapping(value = "/ajaxForm", method = RequestMethod.GET)
+	public String contactformAjax(ModelMap model){
+	return "ajaxPage";
+	}
+	@RequestMapping(value = "/ajax", method = RequestMethod.POST)
+	public @ResponseBody String getContactsThroughAjax(ModelMap model,@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName,
+			@RequestParam("telephone") String telephone,@RequestParam("email") String email){
+		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getContacts");
+		Contact contact = new Contact();
+		contact.setEmail(email);
+		contact.setFirstname(firstName);
+		contact.setLastname(lastName);
+		contact.setTelephone(telephone);
+		contactService.addContact(contact);
+		List<Contact> contactList = contactService.listContact();
+		model.addAttribute("contactList", contactList);
+		String successMessage = "New Contact Is Added";
+		
+		Gson gson = new Gson();
+		String json = null;
+		try{
+		
+			json = gson.toJson(contactService.listContact());
+		
+		}catch(Exception e){
+			logger.error(Constants.METHOD_INSIDE_MESSAGE +"getAuthors",e);
+			
+		}
+		return json;
+}
+	
+	
+	
+	
+	
+	/*******************************************************************/
+	
+	
 	@RequestMapping(value = "/listContacts", method = RequestMethod.GET)
 	public String getContacts(ModelMap model){
 		logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getContacts");
@@ -442,6 +484,30 @@ public class HelloController {
 	
 	    }
 
-} 
+
+/********************************************************************************
+ *                                       AJAX-Response-Type 2 Method
+ ************************************************************************************/
+	@RequestMapping(value = "/ajaxFormTwo", method = RequestMethod.GET)
+	public String contactformAjaxTwo(ModelMap model){
+	return "IncludeContactsAjax";
+	}
+
+@RequestMapping(value = "/ajaxFormResponseType2Method", method = RequestMethod.POST)
+public String ajaxFormResponseType2Method(ModelMap model,@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName,
+		@RequestParam("telephone") String telephone,@RequestParam("email") String email){
+	logger.debug(Constants.METHOD_INSIDE_MESSAGE +"getContacts");
+	Contact contact = new Contact();
+	contact.setEmail(email);
+	contact.setFirstname(firstName);
+	contact.setLastname(lastName);
+	contact.setTelephone(telephone);
+	contactService.addContact(contact);
+	List<Contact> contactList = contactService.listContact();
+	model.addAttribute("contactList", contactList);
+	return "IncludeContactsAjaxTwo";
 	
+}
+}
+
 	

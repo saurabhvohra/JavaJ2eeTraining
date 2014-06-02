@@ -42,6 +42,8 @@ display: inline-block;/* to make it verticcle use "block"*/
 <li><a href="${mainUrl}/userdata?page=0" target="_blank">Users From DataBase</a></li>
 <li><a href="${mainUrl}/userlogin">Login(Database)</a></li>
 <li><a href="${mainUrl}/photo2">Capcha Example</a></li>
+<li><a href="${mainUrl}/ajaxForm">ajax Example</a></li>
+<li><a href="${mainUrl}/ajaxFormTwo">AJAX-Response-Type 2 Method</a></li>
 </ul>
 </nav>
 <%-- <table>

@@ -66,7 +66,7 @@ $(document).ready(function(){
 <form action="${mainUrl}/userSignup">
 <input type="submit" value="SignUp">
 </form>
-
+<%-- 
 
 <form:form action="submitForm" commandName="portfolio" method="post">
 
@@ -84,6 +84,6 @@ $(document).ready(function(){
 
 <script>
 $("#loginform").validate();
-</script>
+</script> --%>
 </body>
 </html>

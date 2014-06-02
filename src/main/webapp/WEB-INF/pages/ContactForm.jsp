@@ -1,5 +1,7 @@
 <html>
 <jsp:include page="header.jsp"/>
+<head>
+</head>
 <body>
 <form name="input" action="${mainUrl}/contact" method="Post">
 First Name: <input type="text" name="firstName">
