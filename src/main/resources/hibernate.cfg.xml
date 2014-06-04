@@ -15,7 +15,10 @@
         <mapping class="com.agilemaple.common.entity.PLanguage" />
         <mapping class="com.agilemaple.common.entity.Cities" />
         <mapping class="com.agilemaple.common.entity.CLanguage" />
-       
+        <mapping class="com.agilemaple.common.entity.Property" />
+        <mapping class="com.agilemaple.common.entity.PropertyType" />
+        <mapping class="com.agilemaple.common.entity.PropertyItems" />
+        <mapping class="com.agilemaple.common.entity.Address" />
     </session-factory>
 	    
 </hibernate-configuration>

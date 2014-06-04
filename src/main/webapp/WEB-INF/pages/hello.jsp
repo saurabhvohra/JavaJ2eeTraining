@@ -19,12 +19,12 @@
 			}
 		</script>
 
-		<c:if test="${pageContext.request.userPrincipal.name != null}">
+	<%-- 	<c:if test="${pageContext.request.userPrincipal.name != null}">
 			<h2>
 				User : ${pageContext.request.userPrincipal.name} | <a
 					href="javascript:formSubmit()"> Logout</a>
 			</h2>
-		</c:if>
+		</c:if> --%>
 
 
 	</sec:authorize>
