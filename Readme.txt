@@ -1,22 +1,41 @@
-Java-J2ee 3 Months Training(60 Hours)
+Spring Security
 
-1. Java-J2ee Overview
+1: Servlets Filter a Review
 
-2. Java Web Project(XML, HTML, CSS, JavaScript, Jquery, JSP, Servlet, Design Paterns, Web Server)
+2: Adding a Spring Security Filter
 
-3. Java Web Project + database(Mysql)
+3: Adding Spring Login Form
 
-4. Spring Framework
+4: Serving Static Resources :Access Rules
 
-5. Hibernate Framework
+5:Customising the Login Form
 
-6. Java Persistence API
+6: Displaying Login Errors
 
-7. Tools trainings(Eclipse, Maven, other plugins required in IT industries to develop a Java web project)
+7: Authorizing Users from Database
 
-8. Development in a team using revision control version software 
+8: Adding Create Account Form
 
-9. Live Project using Java-J2ee
+9: Validations to User Form
 
-Prerequieste - Basic knowledge of Java, xml , html, css, sql and javascript
+10: Dealing with duplicate names
 
+11: Storing validation messages in "Property file"
+
+12: Using JQuery to validate the password 
+
+13: Using Property File values in JSP
+
+14: Working with Roles
+
+15:Row Mapping with BeanPropertyRowMapper
+
+16: Case Sensitive usernames
+
+17: Method Level Access Control
+
+18: Catching Secure Annotation Voilations
+
+19: Adding Remember me Functionality
+
+20: Encrypting Passwords
